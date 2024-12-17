@@ -7,9 +7,9 @@ export default function Hero() {
     return (
         <div>
             <Navbar />
-            <div className="flex flex-col items-center justify-center gap-8 p-24 text-center">
-                <p className="text-7xl font-semibold leading-tight tracking-tight capitalize text-balance">
-                    Take Control of Your Expenses with AI Intelligence
+            <div className="flex flex-col items-center justify-center gap-8 md:p-24 p-14 text-center">
+                <p className="md:text-7xl text-4xl font-semibold leading-tight tracking-tight capitalize text-balance">
+                    Take Control of Your Expenses with AI
                 </p>
                 <p className="text-2xl font-medium text-balance">
                     Automate your tracking, discover spending insights, and make smarter financial choices with ease.
