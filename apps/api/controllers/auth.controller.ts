@@ -6,8 +6,8 @@ import { user } from '../config/db/schema';
 import { sendResponse } from '../utils/sendResponse';
 import { errorHandler } from '../utils/error';
 import { eq } from 'drizzle-orm';
+const { JWT_SECRET } = require('../config/env');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 // Register User
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
