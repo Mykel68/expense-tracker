@@ -1,14 +1,16 @@
 import express from 'express';
+import dotenv from 'dotenv';
+import userRoutes from './routes/auth.route';
+
+const PORT = process.env.PORT || 5000;
+
+dotenv.config();
 
 const app = express();
-const PORT = 5000;
-
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('API is running 🚀');
-});
+app.use('/api/auth', userRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(3000, () => {
+    console.log(` Server is running on port ${PORT}`);
 });
