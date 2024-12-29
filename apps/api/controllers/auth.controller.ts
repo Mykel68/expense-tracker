@@ -11,6 +11,7 @@ const { JWT_SECRET } = require('../config/env');
 
 // Register User
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
+    console.log("registerUser");
     const { email, password } = req.body;
 
     try {
@@ -55,7 +56,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: existingUser[0].id }, JWT_SECRET, {
+        const token = jwt.sign({ userId: existingUser[0] }, JWT_SECRET, {
             expiresIn: '1h',
         });
 

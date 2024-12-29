@@ -8,7 +8,7 @@ interface ApiResponse {
 
 export const sendResponse = (res: Response, { statusCode, message, data }: ApiResponse): Response => {
     return res.status(statusCode).json({
-        success: statusCode >= 200 && statusCode < 300, // Mark success based on status code
+        success: statusCode >= 200 && statusCode < 300,
         message,
         data,
     });

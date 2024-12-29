@@ -1,6 +1,5 @@
 export const errorHandler = (error: any): { statusCode: number, message: string } => {
     if (error.name === 'ValidationError') {
-        // Handle validation errors (you could also add more logic here based on error specifics)
         return {
             statusCode: 400,
             message: 'Validation Error: ' + error.message,

@@ -1,19 +1,76 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/jwtUtils';
+import { verifyToken } from '../utils/jwt';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { sendResponse } from '../utils/sendResponse';
+import { errorHandler } from '../utils/error';
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-    const token = req.headers['authorization']?.split(' ')[1]; // Extract token from Authorization header
+const { JWT_SECRET_KEY, X_API_KEY } = require('../config/env');
+
+export interface AuthenticatedRequest extends Request {
+    userId?: string;
+}
+
+export const verify_X_API_KEY = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        console.log("verify_X_API_KEY", X_API_KEY);
+
+        let apiKeyHeader = req.headers['x-api-key'];
+
+        // Ensure apiKeyHeader is a string
+        if (Array.isArray(apiKeyHeader)) {
+            apiKeyHeader = apiKeyHeader[0]; // Use the first value if it's an array
+        }
+
+        if (!apiKeyHeader) {
+            sendResponse(res, {
+                statusCode: 401,
+                message: 'Unauthorized: Missing API key',
+            });
+            return;
+        }
+
+        // Extract the actual API key (if prefixed with 'Bearer ')
+        const apiKey = apiKeyHeader.startsWith('Bearer ')
+            ? apiKeyHeader.split(' ')[1]
+            : apiKeyHeader;
+
+        if (apiKey !== X_API_KEY) {
+            sendResponse(res, {
+                statusCode: 401,
+                message: 'Unauthorized: Invalid API key',
+            });
+            return;
+        }
+
+        next();
+    } catch (error) {
+        const { statusCode, message } = errorHandler(error);
+        sendResponse(res, { statusCode, message });
+    }
+};
+
+
+
+
+export const isSignedIn = (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
+    const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
-        res.status(401).json({ message: 'No token provided' });
+        sendResponse(res, {
+            statusCode: 401,
+            message: 'Unauthorized: No token provided',
+        });
         return;
     }
 
     try {
-        const decoded = verifyToken(token);
-        req.user = decoded; // Attach user info to request
-        next(); // Proceed to the next middleware or route handler
-    } catch (error) {
-        res.status(401).json({ message: 'Invalid or expired token' });
+        const decoded = jwt.verify(token, JWT_SECRET_KEY) as JwtPayload;
+        req.userId = decoded.userId as string;
+        next();
+    } catch (err) {
+        sendResponse(res, {
+            statusCode: 401,
+            message: 'Unauthorized: Invalid or expired token',
+        });
     }
 };

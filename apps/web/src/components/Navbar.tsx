@@ -52,7 +52,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex gap-8 items-center">
+                <div className="hidden md:flex gap-10 items-center">
                     {NavbarLinks.map((link, index) => (
                         <p key={index} className="text-lg font-medium cursor-pointer hover:text-gray-500 transition">
                             {link}
