@@ -6,20 +6,24 @@ import { user } from '../config/db/schema';
 import { sendResponse } from '../utils/sendResponse';
 import { errorHandler } from '../utils/error';
 import { eq } from 'drizzle-orm';
+import { checkMissingFields } from '../utils/checkMissingFields';
 const { JWT_SECRET } = require('../config/env');
 
 
 // Register User
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
-    console.log("registerUser");
-    const { email, password } = req.body;
+
+    // Validate required fields
+    const requiredFields = ['email', 'password'];
+    if (checkMissingFields(req, res, requiredFields))
+        return;
 
     try {
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
         // Insert user into the database
-        await db.insert(user).values({ email, password: hashedPassword });
+        await db.insert(user).values({ email: req.body.email, password: hashedPassword });
 
         // Send successful response
         sendResponse(res, {
@@ -31,6 +35,8 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         sendResponse(res, { statusCode, message });
     }
 };
+
+
 
 // Login User
 export const loginUser = async (req: Request, res: Response): Promise<void> => {

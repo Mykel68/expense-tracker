@@ -12,8 +12,6 @@ export interface AuthenticatedRequest extends Request {
 
 export const verify_X_API_KEY = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log("verify_X_API_KEY", X_API_KEY);
-
         let apiKeyHeader = req.headers['x-api-key'];
 
         // Ensure apiKeyHeader is a string
