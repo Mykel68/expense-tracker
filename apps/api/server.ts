@@ -1,5 +1,6 @@
 import express from 'express';
 import userRoutes from './routes/auth.route';
+import budgetRoutes from './routes/budget.route';
 import { sequelize, connectToDatabase } from './config/db';
 
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', userRoutes);
+app.use('/api/budgets', budgetRoutes);
 
 // Connect to Database and Start Server
 (async () => {

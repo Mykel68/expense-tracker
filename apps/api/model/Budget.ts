@@ -2,7 +2,17 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
 import User from './User';
 
-class Budget extends Model { }
+class Budget extends Model {
+    public id!: string;
+    public userId!: string;
+    public category!: string;
+    public limit!: number;
+    public startDate!: Date;
+    public endDate!: Date;
+
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+}
 
 Budget.init(
     {
