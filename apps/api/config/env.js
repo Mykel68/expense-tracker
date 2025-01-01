@@ -7,6 +7,6 @@ module.exports = {
     PORT: process.env.PORT || 5000,
     DATABASE_URL: process.env.DATABASE_URL,
     X_API_KEY: process.env.X_API_KEY,
-    SECRET_KEY: process.env.SECRET_KEY,
+    JWT_SECRET: process.env.JWT_SECRET,
 
 };

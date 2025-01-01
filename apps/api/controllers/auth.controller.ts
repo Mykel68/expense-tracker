@@ -1,79 +1,103 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { db } from '../config/db/index';
-import { user } from '../config/db/schema';
+import User from '../model/User';
 import { sendResponse } from '../utils/sendResponse';
 import { errorHandler } from '../utils/error';
-import { eq } from 'drizzle-orm';
-import { checkMissingFields } from '../utils/checkMissingFields';
-const { JWT_SECRET } = require('../config/env');
+import { checkMissingFields } from '../utils/validation';
 
+const { JWT_SECRET } = require('../config/env');
 
 // Register User
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
-
-    // Validate required fields
-    const requiredFields = ['email', 'password'];
-    if (checkMissingFields(req, res, requiredFields))
-        return;
+    const { email, password, name } = req.body;
 
     try {
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        // Validate required fields
+        const requiredFields = ['email', 'password', 'name'];
+        if (checkMissingFields(req, res, requiredFields))
+            return;
 
-        // Insert user into the database
-        await db.insert(user).values({ email: req.body.email, password: hashedPassword });
+        // Check if user already exists
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            sendResponse(res, {
+                statusCode: 400,
+                message: 'Email is already registered.',
+            });
+            return;
+        }
 
-        // Send successful response
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user
+        await User.create({ email, password: hashedPassword, name });
+
         sendResponse(res, {
             statusCode: 201,
-            message: 'User registered successfully',
+            message: 'User registered successfully.',
         });
     } catch (error) {
         const { statusCode, message } = errorHandler(error);
         sendResponse(res, { statusCode, message });
     }
 };
-
-
 
 // Login User
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
     try {
-        // Fetch the user from the database
-        const existingUser = await db
-            .select()
-            .from(user)
-            .where(eq(user.email, email))
-            .execute();
-
-        if (existingUser.length === 0) {
-            throw new Error('Invalid credentials');
+        // Check for missing fields
+        if (!email || !password) {
+            sendResponse(res, {
+                statusCode: 400,
+                message: 'Email and password are required.',
+            });
+            return;
         }
 
-        // Check if password is correct
-        const isPasswordValid = await bcrypt.compare(password, existingUser[0].password);
+        // Check if user exists
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            sendResponse(res, {
+                statusCode: 400,
+                message: 'Invalid credentials.',
+            });
+            return;
+        }
 
+        // Compare password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            throw new Error('Invalid credentials');
+            sendResponse(res, {
+                statusCode: 400,
+                message: 'Invalid credentials.',
+            });
+            return;
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: existingUser[0] }, JWT_SECRET, {
+        const token = jwt.sign({ userId: user.id }, JWT_SECRET as string, {
             expiresIn: '1h',
         });
 
-        // Send successful response with token
         sendResponse(res, {
             statusCode: 200,
-            message: 'Login successful',
+            message: 'Login successful.',
             data: { token },
         });
     } catch (error) {
+        console.error('Error logging in:', error);
+        // sendResponse(res, {
+        //     statusCode: 500,
+        //     message: 'Internal server error.',
+        // });
         const { statusCode, message } = errorHandler(error);
         sendResponse(res, { statusCode, message });
     }
 };
+
+
+

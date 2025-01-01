@@ -21,6 +21,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "motion": "^11.15.0"
+    "motion": "^11.15.0",
+    "sequelize": "^6.37.5"
   }
 }

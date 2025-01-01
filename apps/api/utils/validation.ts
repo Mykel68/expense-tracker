@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { sendResponse } from '../utils/sendResponse';
+import { sendResponse } from './sendResponse';
 
 export const checkMissingFields = (req: Request, res: Response, requiredFields: string[]): boolean => {
     const missingFields = requiredFields.filter((field) => !req.body[field]);

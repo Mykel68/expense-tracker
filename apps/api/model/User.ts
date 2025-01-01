@@ -1,7 +1,46 @@
-import { pgTable, serial, text } from 'drizzle-orm/pg-core';  // Adjust the import according to your setup
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../config/db';
 
-export const users = pgTable('users', {
-    id: serial('id').primaryKey(),
-    email: text('email').notNull(),
-    password: text('password').notNull(),
-});
+interface UserAttributes {
+    id?: number;
+    name: string;
+    email: string;
+    password: string;
+}
+
+class User extends Model<UserAttributes> implements UserAttributes {
+    public id!: number;
+    public name!: string;
+    public email!: string;
+    public password!: string;
+}
+
+User.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        name: {
+            type: DataTypes.STRING,
+            // allowNull: false,
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+    },
+    {
+        sequelize,
+        tableName: 'users',
+        timestamps: true, // Adds createdAt and updatedAt fields
+    }
+);
+
+export default User;

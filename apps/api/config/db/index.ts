@@ -1,8 +1,8 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
-// import  from './User'
-import { user } from './User'
+import * as schema from './schema';
+
 
 dotenv.config();
 
@@ -15,6 +15,7 @@ const pool = new Pool({
 });
 
 export const db = drizzle(pool);
+// export const db = drizzle(pool, { schema });
 
 (async () => {
     try {
@@ -25,3 +26,17 @@ export const db = drizzle(pool);
         process.exit(1);
     }
 })();
+
+
+// export default {
+//     out: './migrations',
+//     schema: './schema', 
+//     driver: 'pg',
+//     dbCredentials: {
+//         connectionString: process.env.DATABASE_URL || '',
+//     },
+// };
+
+
+
+
