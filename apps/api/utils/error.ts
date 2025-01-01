@@ -1,4 +1,5 @@
 export const errorHandler = (error: any): { statusCode: number, message: string } => {
+    console.error('Error:', error);
     if (error.name === 'ValidationError') {
         return {
             statusCode: 400,
