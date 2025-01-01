@@ -50,25 +50,33 @@ export const verify_X_API_KEY = async (req: Request, res: Response, next: NextFu
 
 
 
-export const isSignedIn = (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
-    const token = req.headers.authorization?.split(' ')[1];
+// export const isSignedIn = (req: Request, res: Response, next: NextFunction): void => {
+//     // Check for token in Authorization header
+//     const token = req.headers.authorization?.split(' ')[1];  // Expected format: "Bearer <token>"
 
-    if (!token) {
-        sendResponse(res, {
-            statusCode: 401,
-            message: 'Unauthorized: No token provided',
-        });
-        return;
-    }
+//     // If no token is provided, return unauthorized response
+//     if (!token) {
+//         sendResponse(res, {
+//             statusCode: 401,
+//             message: 'Unauthorized: No token provided',
+//         });
+//         return;
+//     }
 
-    try {
-        const decoded = jwt.verify(token, JWT_SECRET_KEY) as JwtPayload;
-        req.userId = decoded.userId as string;
-        next();
-    } catch (err) {
-        sendResponse(res, {
-            statusCode: 401,
-            message: 'Unauthorized: Invalid or expired token',
-        });
-    }
-};
+//     try {
+//         // Verify the token and decode the payload
+//         const decoded = jwt.verify(token, JWT_SECRET_KEY) as { userId: string };
+
+//         // Attach userId from the decoded token to the request object
+//         req.userId = decoded.userId;
+
+//         // Proceed to the next middleware or route handler
+//         next();
+//     } catch (err) {
+//         // If the token is invalid or expired, return unauthorized response
+//         sendResponse(res, {
+//             statusCode: 401,
+//             message: 'Unauthorized: Invalid or expired token',
+//         });
+//     }
+// };

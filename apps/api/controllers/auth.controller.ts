@@ -46,17 +46,13 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
 
 // Login User
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
-    const { email, password } = req.body;
 
     try {
         // Check for missing fields
-        if (!email || !password) {
-            sendResponse(res, {
-                statusCode: 400,
-                message: 'Email and password are required.',
-            });
+        const { email, password } = req.body;
+        const requiredFields = ['email', 'password'];
+        if (checkMissingFields(req, res, requiredFields))
             return;
-        }
 
         // Check if user exists
         const user = await User.findOne({ where: { email } });
@@ -80,9 +76,10 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
         // Generate JWT token
         const token = jwt.sign({ userId: user.id }, JWT_SECRET as string, {
-            expiresIn: '1h',
+            expiresIn: '1h', // Token expiration
         });
 
+        // Send successful response with token
         sendResponse(res, {
             statusCode: 200,
             message: 'Login successful.',
@@ -90,10 +87,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         });
     } catch (error) {
         console.error('Error logging in:', error);
-        // sendResponse(res, {
-        //     statusCode: 500,
-        //     message: 'Internal server error.',
-        // });
+
+        // Use errorHandler to handle different types of errors (e.g., database issues, validation errors)
         const { statusCode, message } = errorHandler(error);
         sendResponse(res, { statusCode, message });
     }

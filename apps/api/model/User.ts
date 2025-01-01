@@ -38,7 +38,7 @@ User.init(
     },
     {
         sequelize,
-        tableName: 'users',
+        tableName: 'Users',
         timestamps: true, // Adds createdAt and updatedAt fields
     }
 );
