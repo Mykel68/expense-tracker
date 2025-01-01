@@ -83,7 +83,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         sendResponse(res, {
             statusCode: 200,
             message: 'Login successful.',
-            data: { token },
+            data: { token, user },
         });
     } catch (error) {
         console.error('Error logging in:', error);

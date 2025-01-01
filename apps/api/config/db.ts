@@ -20,7 +20,7 @@ export const connectToDatabase = async (): Promise<void> => {
         console.log('Database connection established successfully.');
 
         // Synchronize all models
-        await sequelize.sync({ force: true }); // Use `force: true` for a full reset in development
+        await sequelize.sync({ alter: true }); // Use `force: true` for a full reset in development
         console.log('Database synchronized.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);

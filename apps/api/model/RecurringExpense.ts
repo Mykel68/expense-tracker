@@ -1,21 +1,16 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../config/db';
-import User from './User';
+import sequelize from '../config/database';
 
-class RecurringExpense extends Model { }
+class Expense extends Model { }
 
-RecurringExpense.init(
+Expense.init(
     {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
         },
-        userId: {
-            type: DataTypes.UUID,
-            allowNull: false,
-        },
-        category: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -23,28 +18,31 @@ RecurringExpense.init(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        frequency: {
-            type: DataTypes.STRING, // e.g., 'monthly', 'weekly'
-            allowNull: false,
-        },
-        startDate: {
+        date: {
             type: DataTypes.DATE,
             allowNull: false,
         },
-        endDate: {
-            type: DataTypes.DATE,
+        userId: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        isRecurring: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false, // Indicates if the expense is recurring
+        },
+        recurrenceInterval: {
+            type: DataTypes.STRING, // e.g., 'daily', 'weekly', 'monthly', 'yearly'
+            allowNull: true,
+        },
+        recurrenceEndDate: {
+            type: DataTypes.DATE, // Optional end date for the recurrence
             allowNull: true,
         },
     },
     {
         sequelize,
-        modelName: 'RecurringExpense',
-        timestamps: true,
+        modelName: 'Expense',
     }
 );
 
-// Establish relationships
-User.hasMany(RecurringExpense, { foreignKey: 'userId' });
-RecurringExpense.belongsTo(User, { foreignKey: 'userId' });
-
-export default RecurringExpense;
+export default Expense;
