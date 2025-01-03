@@ -7,23 +7,23 @@ import { verifyToken } from "@/helpers/jwtSecretGenerator";
 import { useMemo } from "react";
 
 export async function POST(request: NextRequest) {
+    const { email, password, name } = await request.json();
     try {
-        const pid = await getPidFromCookies(request);
-        const headers = Object.fromEntries(request.headers.entries());
+        // const pid = await getPidFromCookies(request);
+        // const headers = Object.fromEntries(request.headers.entries());
 
-        if (!(await verifyToken(headers))) {
-            return returnErrorResponse();
-        }
+        // if (!(await verifyToken(headers))) {
+        //     return returnErrorResponse();
+        // }
 
-        const modifiedData = await request.json();
-        const authHeaders = {
-            Authorization: `Bearer ${pid}`,
+        const registerData = { email, password, name };
+
+        const headers = {
+            "x-api-key": `Bearer ${process.env.X_API_KEY}`,
         };
 
         const apiUrl = process.env.API_URL;
-        const response = await axios.post(`${apiUrl}/auth/register`, modifiedData, {
-            headers: authHeaders,
-        });
+        const response = await axios.post(`${apiUrl}/auth/register`, registerData, { headers });
 
         if (response.data.status === 200) {
             return returnResponse({
