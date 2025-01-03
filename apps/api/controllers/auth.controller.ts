@@ -5,6 +5,7 @@ import User from '../model/User';
 import { sendResponse } from '../utils/sendResponse';
 import { errorHandler } from '../utils/error';
 import { checkMissingFields } from '../utils/validation';
+import exp from 'constants';
 
 const { JWT_SECRET } = require('../config/env');
 
@@ -94,5 +95,35 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
+export const verifyName = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { name } = req.body;
+        if (!name) {
+            sendResponse(res, {
+                statusCode: 400,
+                message: 'Name is required.',
+            });
+            return;
+        }
+        const user = await User.findOne({ where: { name } });
+        if (!user) {
+            sendResponse(res, {
+                statusCode: 200,
+                message: 'Name is available.',
+            });
+            return;
+        } else {
+            sendResponse(res, {
+                statusCode: 400,
+                message: 'Name is already taken.',
+            });
+            return;
+        }
 
+    } catch (error) {
+        console.error('Error verifying name:', error);
+        const { statusCode, message } = errorHandler(error);
+        sendResponse(res, { statusCode, message });
+    }
+}
 

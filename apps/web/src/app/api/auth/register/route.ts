@@ -25,7 +25,9 @@ export async function POST(request: NextRequest) {
         const apiUrl = process.env.API_URL;
         const response = await axios.post(`${apiUrl}/auth/register`, registerData, { headers });
 
-        if (response.data.status === 200) {
+        console.log("Response from API:", response);
+
+        if (response.status === 201) {
             return returnResponse({
                 message: "Registration successful",
                 response: response.data,
