@@ -16,6 +16,22 @@ app.use('/api/auth', userRoutes);
 app.use('/api/budgets', budgetRoutes);
 app.use('/api/expenses', expenseRoutes);
 
+// welcome api route
+app.get('/', (req, res) => {
+    res.send('Welcome to Expense Tracker API!');
+});
+
+// 404 Route
+app.use((req, res) => {
+    res.status(404).json({ message: 'Not Found' });
+});
+
+// Error Handling Middleware
+app.use((error: any, req: any, res: any, next: any) => {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+});
+
 // Connect to Database and Start Server
 (async () => {
     try {

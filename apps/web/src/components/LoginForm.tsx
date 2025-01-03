@@ -16,11 +16,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import sshInterceptor from "@/helpers/sshInterceptors"
+import { useRouter } from "next/navigation"
 
 // Define schema for validation
 const loginSchema = z.object({
     email: z.string().email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(5, "Password must be at least 5 characters"),
 })
 
 type LoginFormInputs = z.infer<typeof loginSchema>
@@ -36,17 +37,19 @@ export function LoginForm({
     } = useForm<LoginFormInputs>({
         resolver: zodResolver(loginSchema),
     })
+    const router = useRouter()
 
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             const response = await sshInterceptor.post("/api/auth/login", data)
 
             if (!response.status === true) {
-                throw new Error("Failed to login")
+                toast.error("Failed to login")
+                return
             }
 
             toast.success("Login successful!")
-            // Handle redirect or token storage
+            router.push("/dashboard")
         } catch (error) {
             toast.error(error instanceof Error ? error.message : "An error occurred")
         }
