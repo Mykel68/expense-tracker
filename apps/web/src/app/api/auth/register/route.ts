@@ -1,10 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { returnErrorResponse, returnResponse } from "@/helpers/returnResponse";
 import { NextRequest } from "next/server";
-import { cookies } from "next/headers";
-import { getPidFromCookies } from "@/helpers/authConfig";
-import { verifyToken } from "@/helpers/jwtSecretGenerator";
-import { useMemo } from "react";
+
 
 export async function POST(request: NextRequest) {
     const { email, password, name } = await request.json();
@@ -34,11 +31,7 @@ export async function POST(request: NextRequest) {
                 statusCode: 200,
             });
         } else {
-            return returnResponse({
-                message: "Registration failed",
-                response: response.data,
-                statusCode: 400,
-            });
+            return returnErrorResponse();
         }
     } catch (e) {
         const response = (e as AxiosError<{ message: string }>).response;

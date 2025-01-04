@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -24,17 +25,53 @@ export function Register({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"form">) {
-
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
+        watch,
     } = useForm<RegisterInputs>({
         resolver: zodResolver(registerSchema),
     })
+
     const router = useRouter()
+    const [nameStatus, setNameStatus] = useState<string | null>(null) // Tracks name availability
+    const [checkingName, setCheckingName] = useState(false) // Tracks if API is being called
+    const nameValue = watch("name") // Watches the name input
+
+    useEffect(() => {
+        if (!nameValue || nameValue.length < 4) {
+            setNameStatus(null)
+            return
+        }
+
+        const checkName = async () => {
+            try {
+                setCheckingName(true)
+                const response = await sshInterceptor.post("/api/auth/verifyName", { name: nameValue })
+                setCheckingName(false)
+                console.log("Response from API:", response.data)
+                setNameStatus(response?.data?.response?.data?.available ? "available" : "taken")
+            } catch (error) {
+                setCheckingName(false)
+                setNameStatus("error")
+                console.error("Error checking name availability:", error)
+            }
+        }
+
+        const delayDebounce = setTimeout(() => {
+            checkName()
+        }, 500) // Debounce by 500ms
+
+        return () => clearTimeout(delayDebounce)
+    }, [nameValue])
 
     const onSubmit = async (data: RegisterInputs) => {
+        if (nameStatus !== "available") {
+            toast.error("Please choose an available username")
+            return
+        }
+
         try {
             const response = await sshInterceptor.post("/api/auth/register", data)
 
@@ -43,12 +80,13 @@ export function Register({
                 return
             }
 
-            toast.success("register successful!")
+            toast.success("Register successful!")
             router.push("/login")
         } catch (error) {
             toast.error(error instanceof Error ? error.message : "An error occurred")
         }
     }
+
     return (
         <form className={cn("flex flex-col gap-6", className)} onSubmit={handleSubmit(onSubmit)} {...props}>
             <div className="flex flex-col items-center gap-2 text-center">
@@ -61,7 +99,22 @@ export function Register({
                 {/* Username Field */}
                 <div className="grid gap-2">
                     <Label htmlFor="name">Username</Label>
-                    <Input id="name" type="text" placeholder="johndoe"   {...register("name")} required />
+                    <Input
+                        id="name"
+                        type="text"
+                        placeholder="johndoe"
+                        {...register("name")}
+                        required
+                    />
+                    {checkingName ? (
+                        <p className="text-sm text-blue-500">Checking name availability...</p>
+                    ) : nameStatus === "available" ? (
+                        <p className="text-sm text-green-500">Name is available!</p>
+                    ) : nameStatus === "taken" ? (
+                        <p className="text-sm text-red-500">Name is already taken</p>
+                    ) : nameStatus === "error" ? (
+                        <p className="text-sm text-orange-500">Error checking name</p>
+                    ) : null}
                     {errors.name && (
                         <Label htmlFor="name" className="text-sm text-red-500">
                             {errors.name.message}
@@ -71,7 +124,13 @@ export function Register({
                 {/* Email Field */}
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="m@example.com"   {...register("email")} required />
+                    <Input
+                        id="email"
+                        type="email"
+                        placeholder="m@example.com"
+                        {...register("email")}
+                        required
+                    />
                     {errors.email && (
                         <Label htmlFor="email" className="text-sm text-red-500">
                             {errors.email.message}
@@ -83,7 +142,13 @@ export function Register({
                     <div className="flex items-center justify-between">
                         <Label htmlFor="password">Password</Label>
                     </div>
-                    <Input id="password" type="password" placeholder="********"   {...register("password")} required />
+                    <Input
+                        id="password"
+                        type="password"
+                        placeholder="********"
+                        {...register("password")}
+                        required
+                    />
                     {errors.password && (
                         <Label htmlFor="password" className="text-sm text-red-500">
                             {errors.password.message}
@@ -114,7 +179,7 @@ export function Register({
             {/* Footer */}
             <div className="text-center text-sm">
                 Already have an account?{" "}
-                <Link href="/login" type="submit" className="underline underline-offset-4">
+                <Link href="/login" className="underline underline-offset-4">
                     Login
                 </Link>
             </div>

@@ -98,32 +98,38 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 export const verifyName = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name } = req.body;
-        if (!name) {
+
+        // Validate input
+        if (!name || typeof name !== 'string' || name.trim() === '') {
             sendResponse(res, {
                 statusCode: 400,
-                message: 'Name is required.',
+                message: 'A valid name is required.',
             });
             return;
         }
+
+        // Check if the name exists in the database
         const user = await User.findOne({ where: { name } });
-        if (!user) {
+
+        // Respond based on availability
+        if (user) {
+            sendResponse(res, {
+                statusCode: 208,
+                message: 'Name is already taken.',
+                data: { available: false },
+            });
+        } else {
             sendResponse(res, {
                 statusCode: 200,
                 message: 'Name is available.',
+                data: { available: true },
             });
-            return;
-        } else {
-            sendResponse(res, {
-                statusCode: 400,
-                message: 'Name is already taken.',
-            });
-            return;
         }
-
     } catch (error) {
         console.error('Error verifying name:', error);
+
+        // Handle and respond to errors
         const { statusCode, message } = errorHandler(error);
         sendResponse(res, { statusCode, message });
     }
-}
-
+};
