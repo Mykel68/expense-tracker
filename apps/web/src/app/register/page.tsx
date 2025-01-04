@@ -4,8 +4,8 @@ import { Register } from "@/components/form/register"
 
 export default function LoginPage() {
     return (
-        <div className="grid min-h-svh lg:grid-cols-2  ">
-            <div className="flex flex-col gap-4 p-6 md:p-10">
+        <div className="grid min-h-svh lg:grid-cols-2 background ">
+            <div className="flex flex-col gap-4 p-6 md:p-10 opacity-80 bg-muted bg-card ">
                 <div className="flex justify-center gap-2 md:justify-start">
                     <a href="#" className="flex items-center gap-2 font-medium">
                         <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
@@ -20,7 +20,7 @@ export default function LoginPage() {
                     </div>
                 </div>
             </div>
-            <div className="relative hidden bg-muted lg:block">
+            <div className="relative hidden  lg:block">
                 <img
                     src="/placeholder.svg"
                     alt="Image"

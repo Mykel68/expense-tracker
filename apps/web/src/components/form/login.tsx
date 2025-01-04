@@ -63,7 +63,7 @@ export function LoginForm({
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
-            <Card>
+            <Card className="opacity-80 bg-muted bg-card">
                 <CardHeader className="text-center">
                     <CardTitle className="text-xl">Welcome back</CardTitle>
                     <CardDescription>
@@ -72,7 +72,7 @@ export function LoginForm({
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="grid gap-6">
+                        <div className="grid gap-6 ">
                             <div className="flex flex-col gap-4">
                                 <Button variant="outline" className="w-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
