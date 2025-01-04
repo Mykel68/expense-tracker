@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import sshInterceptor from "@/helpers/sshInterceptors"
+import { Eye, EyeOff } from "lucide-react"
 
 const registerSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -38,6 +39,8 @@ export function Register({
     const [nameStatus, setNameStatus] = useState<string | null>(null) // Tracks name availability
     const [checkingName, setCheckingName] = useState(false) // Tracks if API is being called
     const nameValue = watch("name") // Watches the name input
+    const [showPassword, setShowPassword] = useState(false);
+
 
     useEffect(() => {
         if (!nameValue || nameValue.length < 4) {
@@ -50,7 +53,7 @@ export function Register({
                 setCheckingName(true)
                 const response = await sshInterceptor.post("/api/auth/verifyName", { name: nameValue })
                 setCheckingName(false)
-                console.log("Response from API:", response.data)
+                // console.log("Response from API:", response.data)
                 setNameStatus(response?.data?.response?.data?.available ? "available" : "taken")
             } catch (error) {
                 setCheckingName(false)
@@ -139,16 +142,23 @@ export function Register({
                 </div>
                 {/* Password Field */}
                 <div className="grid gap-2">
-                    <div className="flex items-center justify-between">
-                        <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                        <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="********"
+                            {...register("password")}
+                            required
+                        />
+                        <button
+                            type="button"
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                            {showPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
+                        </button>
                     </div>
-                    <Input
-                        id="password"
-                        type="password"
-                        placeholder="********"
-                        {...register("password")}
-                        required
-                    />
                     {errors.password && (
                         <Label htmlFor="password" className="text-sm text-red-500">
                             {errors.password.message}

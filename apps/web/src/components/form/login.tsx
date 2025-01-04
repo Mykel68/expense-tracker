@@ -18,6 +18,8 @@ import { Label } from "@/components/ui/label"
 import sshInterceptor from "@/helpers/sshInterceptors"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { Eye, EyeOff } from "lucide-react"
+import { useState } from "react"
 
 // Define schema for validation
 const loginSchema = z.object({
@@ -31,6 +33,9 @@ export function LoginForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+
+    const [showPassword, setShowPassword] = useState(false);
+
     const {
         register,
         handleSubmit,
@@ -100,20 +105,23 @@ export function LoginForm({
                                     )}
                                 </div>
                                 <div className="grid gap-2">
-                                    <div className="flex items-center">
-                                        <Label htmlFor="password">Password</Label>
-                                        <a
-                                            href="#"
-                                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                                    <Label htmlFor="password">Password</Label>
+                                    <div className="relative">
+                                        <Input
+                                            id="password"
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="********"
+                                            {...register("password")}
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600"
+                                            onClick={() => setShowPassword((prev) => !prev)}
                                         >
-                                            Forgot your password?
-                                        </a>
+                                            {showPassword ? <Eye className="h-5 w-5" /> : <EyeOff className="h-5 w-5" />}
+                                        </button>
                                     </div>
-                                    <Input
-                                        id="password"
-                                        type="password"
-                                        {...register("password")}
-                                    />
                                     {errors.password && (
                                         <Label htmlFor="password" className="text-sm text-red-500">
                                             {errors.password.message}
