@@ -7,7 +7,7 @@ export default function Hero() {
     return (
         <div>
             <div className="hero-img  hero ">
-                <Navbar />
+                {/* <Navbar /> */}
                 <div className="flex flex-col items-center justify-center gap-8 md:p-24 p-14 text-center ">
                     <p className="md:text-7xl text-4xl font-semibold leading-tight tracking-tight capitalize text-balance">
                         Take Control of Your Expenses with AI
