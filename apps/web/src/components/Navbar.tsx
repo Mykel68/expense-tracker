@@ -17,10 +17,10 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="container mx-auto py-5 px-4">
-            <div className="flex items-center justify-between">
+        <nav className="container mx-auto py-5 px-4 sticky top-0 z-50 ">
+            <div className="flex items-center justify-between ">
                 {/* Logo */}
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 ">
                     <Image
                         src="/logo.png"
                         width={1000}
@@ -28,7 +28,7 @@ export default function Navbar() {
                         className="w-8 h-8"
                         alt="logo"
                     />
-                    <p className="text-2xl font-bold">EXPO</p>
+                    <p className="text-2xl font-bold text-[#FF7700]">EXPO</p>
                 </div>
 
                 {/* Mobile Menu Toggle */}
@@ -52,7 +52,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex gap-10 items-center">
+                <div className="hidden md:flex gap-10 items-center bg-muted py-4 px-10 rounded-full">
                     {NavbarLinks.map((link, index) => (
                         <p key={index} className="text-lg font-medium cursor-pointer hover:text-gray-500 transition">
                             {link}
