@@ -91,6 +91,14 @@ background-color: #ffffff; */
   background-position: center;
 }
 
+.hero-title {
+  font-size: 72px;
+  background: -webkit-linear-gradient(#6928ea, #ff7700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

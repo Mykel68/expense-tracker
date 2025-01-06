@@ -9,7 +9,7 @@ export default function Hero() {
             <div className="hero-img  hero ">
                 {/* <Navbar /> */}
                 <div className="flex flex-col items-center justify-center gap-8 md:p-24 p-14 text-center ">
-                    <p className="md:text-7xl text-4xl font-semibold leading-tight tracking-tight capitalize text-balance">
+                    <p className="md:text-7xl text-4xl font-semibold leading-tight tracking-tight capitalize text-balance hero-title">
                         Take Control of Your Expenses with AI
                     </p>
                     <p className="text-2xl font-medium text-balance tracking-widest">

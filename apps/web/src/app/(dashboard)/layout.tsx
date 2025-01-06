@@ -1,20 +1,18 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import Header from "@/components/Header"
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+
 import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Children } from "react"
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Expense Tracker - Dashboard",
+    description: "Get personalized recommendations to optimize your spending habits.",
+};
+
 
 export default function Page({ children }: { children: React.ReactNode }) {
     return (

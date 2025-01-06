@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import { Button } from './ui/button'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
@@ -17,8 +16,8 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="container mx-auto py-5 px-4 sticky top-0  ">
-            <div className="flex items-center justify-between ">
+        <nav className="container mx-auto py-5 px-4 sticky top-0 bg-gray-50 md:bg-transparent z-50 ">
+            <div className="flex items-center justify-between  md:shadow-none">
                 {/* Logo */}
                 <div className="flex items-center space-x-2 ">
                     <Image
@@ -68,7 +67,7 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             <div
-                className={`md:hidden mt-5 space-y-4 bg-gray-50 p-4 flex absolute left-0 right-0 flex-col items-start ${isOpen ? 'block' : 'hidden'
+                className={`md:hidden mt-5 space-y-4 bg-gray-50  p-4 flex absolute left-0 right-0 flex-col items-start ${isOpen ? 'block' : 'hidden'
                     }`}
             >
                 {NavbarLinks.map((link, index) => (

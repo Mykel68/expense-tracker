@@ -2,6 +2,11 @@ import { GalleryVerticalEnd } from "lucide-react"
 
 import { Register } from "@/components/form/register"
 
+export const metadata = {
+    title: 'Register - Expense Tracker',
+    description: 'Register to your Expense Tracker account.',
+}
+
 export default function LoginPage() {
     return (
         <div className="grid min-h-svh lg:grid-cols-2 background ">
