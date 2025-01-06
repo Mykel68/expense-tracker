@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 
 export default function Page({ children }: { children: React.ReactNode }) {
     return (
-        <SidebarProvider >
+        <SidebarProvider className="!bg-[#f8f0e0e0]" >
             <AppSidebar />
-            <SidebarInset>
+            <SidebarInset className="">
                 <Header />
                 {children}
             </SidebarInset>

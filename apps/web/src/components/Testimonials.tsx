@@ -31,7 +31,7 @@ export default function Testimonials() {
                 <h2 className="text-5xl font-bold text-center mb-12">What Our Users Say</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {testimonials.map((testimonial, index) => (
-                        <Card key={index}>
+                        <Card key={index} className="bg-card-main">
                             <CardContent className="pt-6">
                                 <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
                             </CardContent>

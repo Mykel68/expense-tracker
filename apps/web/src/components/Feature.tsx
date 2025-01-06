@@ -31,7 +31,7 @@ export default function Features() {
                 <h2 className="text-5xl  font-bold text-center mb-12">Powerful Features</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {features.map((feature, index) => (
-                        <Card key={index} className="p-5">
+                        <Card key={index} className="p-5 bg-card-main">
                             <CardHeader>
                                 <feature.icon className="h-8 w-8 text-primary mb-2 text-purple-950" />
                                 <CardTitle className="text-2xl font-bold text-purple-950 ">{feature.title}</CardTitle>
