@@ -58,13 +58,13 @@ export function NavMain({ items }: { items: NavItem[] }) {
                         open={openItems.includes(item.title)}
                         onOpenChange={() => toggleItem(item.title)}
                     >
-                        <SidebarMenuItem className={cn("p-1 rounded-md", isActive(item.url) && "bg-[#ff770038]")}>
+                        <SidebarMenuItem className={cn("p-1 rounded-md", isActive(item.url) && "bg-[#ff770038] text-black")}>
                             <SidebarMenuButton
                                 asChild
                                 tooltip={item.title}
                                 className={cn(
                                     "flex items-center space-x-2 p-2 rounded-md transition-colors",
-                                    isActive(item.url) && "!bg-[#ff7700] hover:bg-[#ff7700] text-primary-foreground"
+                                    isActive(item.url) && " "
                                 )}
                             >
                                 <Link href={item.url} className="flex items-center w-full">

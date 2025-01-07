@@ -38,26 +38,28 @@ export default function SetBudgetPage() {
                     <CardTitle>Set Your Budget</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="space-y-4">
-                        <div>
-                            <Label htmlFor="budget">Budget Amount</Label>
-                            <Input
-                                id="budget"
-                                type="number"
-                                value={budget}
-                                onChange={(e) => setBudget(e.target.value)}
-                                placeholder="Enter budget amount"
-                            />
-                        </div>
-                        <div>
-                            <Label htmlFor="category">Category</Label>
-                            <Input
-                                id="category"
-                                type="text"
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                                placeholder="e.g., Food, Rent, Utilities"
-                            />
+                    <div className="space-y-4 ">
+                        <div className="grid md:grid-cols-2 gap-x-8 gap-y-4">
+                            <div>
+                                <Label htmlFor="budget">Budget Amount</Label>
+                                <Input
+                                    id="budget"
+                                    type="number"
+                                    value={budget}
+                                    onChange={(e) => setBudget(e.target.value)}
+                                    placeholder="Enter budget amount"
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="category">Category</Label>
+                                <Input
+                                    id="category"
+                                    type="text"
+                                    value={category}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    placeholder="e.g., Food, Rent, Utilities"
+                                />
+                            </div>
                         </div>
                         <div>
                             <Label htmlFor="note">Note (Optional)</Label>
