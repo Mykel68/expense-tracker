@@ -33,6 +33,10 @@ export const data = {
             icon: CreditCard,
             items: [
                 {
+                    title: "Expenses",
+                    url: "/transaction/expenses",
+                },
+                {
                     title: "Recent Transactions",
                     url: "#",
                 },

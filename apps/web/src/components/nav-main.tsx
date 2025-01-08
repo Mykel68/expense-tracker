@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { subscribe } from 'diagnostics_channel'
 
 interface NavItem {
     title: string
