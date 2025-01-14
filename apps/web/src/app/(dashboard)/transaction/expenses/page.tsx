@@ -72,6 +72,8 @@ const AddExpense = () => {
                 <CardTitle>Add Expense</CardTitle>
             </CardHeader>
             <CardContent>
+
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div>
                         <Label htmlFor="title">Title</Label>
