@@ -32,8 +32,8 @@ import { data } from "@/constants/Sidebar"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar variant="inset" {...props} className="opacity-80 bg-[#f8f0e0e0]  ">
-            <SidebarHeader className="opacity-80 bg-muted">
+        <Sidebar variant="inset" {...props} className="opacity-80 bg-gray-100  ">
+            <SidebarHeader className="opacity-80 bg-gray-200">
                 <SidebarMenu >
                     <SidebarMenuItem >
                         <SidebarMenuButton size="lg" asChild>
@@ -50,12 +50,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
-            <SidebarContent className="sidebar opacity-80 bg-muted " >
+            <SidebarContent className="sidebar opacity-80 bg-gray-200 " >
                 <NavMain items={data.navMain} />
                 <NavProjects projects={data.projects} />
                 <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
-            <SidebarFooter className="opacity-80 bg-muted">
+            <SidebarFooter className="opacity-80 bg-gray-200">
                 <NavUser user={data.user} />
             </SidebarFooter>
         </Sidebar>

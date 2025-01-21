@@ -29,7 +29,7 @@ export function Sidebar() {
                     variant="link"
                     asChild
                 >
-                    <Link href="/dashboard" className="flex items-center gap-2">
+                    <Link href="/dashboard" className="flex items-center justify-start gap-2">
                         <PanelsTopLeft className="w-6 h-6 mr-1" />
                         <h1
                             className={cn(
@@ -39,7 +39,7 @@ export function Sidebar() {
                                     : "translate-x-0 opacity-100"
                             )}
                         >
-                            Digital Humanities
+                            Expo
                         </h1>
                     </Link>
                 </Button>
