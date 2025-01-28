@@ -12,6 +12,11 @@ import {
     Send,
     Settings2,
     User,
+    TrendingUp,
+    AlertCircle,
+    Wallet,
+    Bell,
+    FileBarChart,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -32,30 +37,27 @@ import { data } from "@/constants/Sidebar"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar variant="inset" {...props} className="opacity-80 bg-gray-100  ">
-            <SidebarHeader className="opacity-80 bg-gray-200">
-                <SidebarMenu >
-                    <SidebarMenuItem >
+        <Sidebar variant="inset" {...props} className="bg-gray-50 border-r border-gray-200">
+            <SidebarHeader className="p-4 border-b border-gray-200">
+                <SidebarMenu>
+                    <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <a href="#">
-                                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                                    <BarChart className="size-4" />
+                            <a href="#" className="flex items-center space-x-3">
+                                <div className="flex aspect-square size-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#6928ea] to-[#ff7700] text-white">
+                                    <BarChart className="size-5" />
                                 </div>
-                                <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-semibold text-[#ff7700]">Expense Tracker</span>
-                                    <span className="truncate text-xs text-[#6928ea]">AI Insights</span>
+                                <div className="flex flex-col text-left">
+                                    <span className="text-lg font-bold text-gray-800">Expo</span>
                                 </div>
                             </a>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
-            <SidebarContent className="sidebar opacity-80 bg-gray-200 " >
+            <SidebarContent className="p-4 space-y-6">
                 <NavMain items={data.navMain} />
-                <NavProjects projects={data.projects} />
-                <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
-            <SidebarFooter className="opacity-80 bg-gray-200">
+            <SidebarFooter className="p-4 border-t border-gray-200">
                 <NavUser user={data.user} />
             </SidebarFooter>
         </Sidebar>

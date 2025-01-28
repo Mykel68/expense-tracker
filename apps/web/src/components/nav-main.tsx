@@ -1,9 +1,8 @@
 "use client"
 
-import { ChevronRight, TypeIcon as type, LucideIcon } from 'lucide-react'
+import { ChevronRight, LucideIcon } from 'lucide-react'
 import { useState } from "react"
 import { usePathname } from "next/navigation"
-
 import {
     Collapsible,
     CollapsibleContent,
@@ -49,7 +48,9 @@ export function NavMain({ items }: { items: NavItem[] }) {
 
     return (
         <SidebarGroup>
-            <SidebarGroupLabel className="text-lg font-semibold mb-2">Platform</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Platform
+            </SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
                     <Collapsible
@@ -57,24 +58,25 @@ export function NavMain({ items }: { items: NavItem[] }) {
                         open={openItems.includes(item.title)}
                         onOpenChange={() => toggleItem(item.title)}
                     >
-                        <SidebarMenuItem className={cn("p-1 rounded-md", isActive(item.url) && "bg-[#ff770038] text-black")}>
+                        <SidebarMenuItem className={cn("mb-1", isActive(item.url) && "bg-[#ff770038]")}>
                             <SidebarMenuButton
                                 asChild
-                                tooltip={item.title}
                                 className={cn(
-                                    "flex items-center space-x-2 p-2 rounded-md transition-colors",
-                                    isActive(item.url) && " "
+                                    "flex items-center space-x-2 p-2.5 rounded-lg transition-colors hover:bg-gray-100",
+                                    isActive(item.url) && "bg-[#ff770038] hover:bg-[#ff770038]"
                                 )}
                             >
                                 <Link href={item.url} className="flex items-center w-full">
-                                    <item.icon className="w-5 h-5 mr-2" />
-                                    <span className="flex-grow">{item.title}</span>
+                                    <item.icon className={cn("w-5 h-5 mr-2", isActive(item.url) ? "text-[#ff7700]" : "text-gray-600")} />
+                                    <span className={cn("flex-grow text-sm font-medium", isActive(item.url) ? "text-[#ff7700]" : "text-gray-800")}>
+                                        {item.title}
+                                    </span>
                                     {item.items?.length && (
                                         <CollapsibleTrigger asChild>
-                                            <SidebarMenuAction className="ml-auto transition-transform duration-200">
+                                            <SidebarMenuAction className="ml-auto p-1 rounded-sm hover:bg-gray-200 transition-colors">
                                                 <ChevronRight
                                                     className={cn(
-                                                        "w-4 h-4",
+                                                        "w-4 h-4 text-gray-600 transition-transform duration-200",
                                                         openItems.includes(item.title) && "rotate-90"
                                                     )}
                                                 />
@@ -85,15 +87,15 @@ export function NavMain({ items }: { items: NavItem[] }) {
                                 </Link>
                             </SidebarMenuButton>
                             {item.items?.length && (
-                                <CollapsibleContent>
+                                <CollapsibleContent className="mt-1">
                                     <SidebarMenuSub>
                                         {item.items.map((subItem) => (
                                             <SidebarMenuSubItem key={subItem.title}>
                                                 <SidebarMenuSubButton
                                                     asChild
                                                     className={cn(
-                                                        "pl-9 py-2 rounded-md transition-colors",
-                                                        isActive(subItem.url) && "bg-[#ff7700] text-secondary-foreground"
+                                                        "pl-9 py-2.5 rounded-md text-sm font-medium transition-colors hover:bg-gray-100",
+                                                        isActive(subItem.url) && "bg-[#ff7700] text-white hover:bg-[#ff7700]"
                                                     )}
                                                 >
                                                     <Link href={subItem.url}>
@@ -112,4 +114,3 @@ export function NavMain({ items }: { items: NavItem[] }) {
         </SidebarGroup>
     )
 }
-

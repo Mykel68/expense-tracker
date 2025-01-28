@@ -1,4 +1,4 @@
-import { BarChart, Bot, CreditCard, DollarSign, FileText, LifeBuoy, PieChart, Send, Settings2, User } from "lucide-react";
+import { BarChart, Bot, CreditCard, DollarSign, FileText, LifeBuoy, PieChart, Send, Settings2, User, TrendingUp, AlertCircle, Wallet, Bell, FileBarChart } from "lucide-react";
 
 export const data = {
     user: {
@@ -18,112 +18,114 @@ export const data = {
                     url: "/dashboard/overview",
                 },
                 {
-                    title: "Insights",
-                    url: "/dashboard/insight",
+                    title: "AI Insights",
+                    url: "/dashboard/ai-insights",
                 },
                 {
                     title: "Monthly Summary",
-                    url: "#",
+                    url: "/dashboard/monthly-summary",
                 },
             ],
         },
         {
-            title: "Transactions",
-            url: "/transaction",
+            title: "Expenses",
+            url: "/expenses",
             icon: CreditCard,
             items: [
                 {
-                    title: "Expenses",
-                    url: "/transaction/expenses",
+                    title: "Track Expenses",
+                    url: "/expenses/track",
                 },
                 {
-                    title: "Recent Transactions",
-                    url: "#",
+                    title: "Expense Categories",
+                    url: "/expenses/categories",
                 },
                 {
-                    title: "Categories",
-                    url: "#",
+                    title: "Recurring Expenses",
+                    url: "/expenses/recurring",
                 },
                 {
-                    title: "Recurrent Payments",
-                    url: "#",
+                    title: "Spending Trends",
+                    url: "/expenses/trends",
+                    icon: TrendingUp,
                 },
             ],
         },
         {
             title: "Budgeting",
             url: "/budget",
-            icon: DollarSign,
+            icon: Wallet,
             items: [
                 {
                     title: "Set Budgets",
                     url: "/budget/set-budget",
                 },
                 {
-                    title: "Track Progress",
-                    url: "#",
+                    title: "Budget Progress",
+                    url: "/budget/progress",
                 },
                 {
-                    title: "Adjust Limits",
-                    url: "#",
+                    title: "Adjust Budgets",
+                    url: "/budget/adjust",
                 },
             ],
         },
         {
             title: "AI Insights",
-            url: "#",
+            url: "/ai-insights",
             icon: Bot,
             items: [
                 {
                     title: "Expense Analysis",
-                    url: "#",
+                    url: "/ai-insights/analysis",
                 },
                 {
-                    title: "Savings Suggestions",
-                    url: "#",
+                    title: "Savings Recommendations",
+                    url: "/ai-insights/savings",
                 },
                 {
                     title: "Risk Alerts",
-                    url: "#",
+                    url: "/ai-insights/alerts",
+                    icon: AlertCircle,
                 },
             ],
         },
-
         {
             title: "Reports",
-            url: "#",
-            icon: FileText,
+            url: "/reports",
+            icon: FileBarChart,
             items: [
                 {
                     title: "Monthly Reports",
-                    url: "#",
+                    url: "/reports/monthly",
                 },
                 {
                     title: "Annual Reports",
-                    url: "#",
+                    url: "/reports/annual",
                 },
                 {
                     title: "Custom Reports",
-                    url: "#",
+                    url: "/reports/custom",
                 },
             ],
         },
         {
             title: "Settings",
-            url: "#",
+            url: "/settings",
             icon: Settings2,
             items: [
                 {
                     title: "Profile",
-                    url: "#",
+                    url: "/settings/profile",
                 },
                 {
                     title: "Notifications",
-                    url: "#",
+                    url: "/settings/notifications",
+                    icon: Bell,
                 },
                 {
                     title: "Preferences",
-                    url: "#",
+                    url: "/settings/preferences",
                 },
             ],
         },
@@ -131,25 +133,25 @@ export const data = {
     navSecondary: [
         {
             title: "Help Center",
-            url: "#",
+            url: "/help",
             icon: LifeBuoy,
         },
         {
             title: "Submit Feedback",
-            url: "#",
+            url: "/feedback",
             icon: Send,
         },
     ],
     projects: [
         {
-            name: "Personal Budgeting",
-            url: "#",
+            name: "Personal Expenses",
+            url: "/projects/personal",
             icon: PieChart,
         },
         {
-            name: "Team Expenses",
-            url: "#",
+            name: "Shared Expenses",
+            url: "/projects/shared",
             icon: User,
         },
     ],
-}
+};
