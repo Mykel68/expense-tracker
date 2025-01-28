@@ -38,7 +38,7 @@ import { data } from "@/constants/Sidebar"
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar variant="inset" {...props} className="bg-gray-50 border-r border-gray-200">
-            <SidebarHeader className="p-4 border-b border-gray-200">
+            <SidebarHeader className=" border-gray-200">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
