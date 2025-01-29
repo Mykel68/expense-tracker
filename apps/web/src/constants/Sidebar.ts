@@ -9,7 +9,7 @@ export const data = {
     navMain: [
         {
             title: "Dashboard",
-            url: "/dashboard",
+            url: "/dashboard/overview",
             icon: BarChart,
             isActive: true,
             items: [
