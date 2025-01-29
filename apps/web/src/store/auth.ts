@@ -8,7 +8,7 @@ interface AuthState {
 export type User = {
     name: string
     email: string
-
+    avatar: string
 }
 
 export const useAuthStore = create<AuthState>((set) => ({

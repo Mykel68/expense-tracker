@@ -6,7 +6,7 @@ import { JwtPayload } from 'jsonwebtoken';
 
 interface JWTPayload {
     email: string;
-    userId: string;
+    avatar: string;
     name: string;
 }
 
@@ -37,12 +37,12 @@ export default async function isSiggedIn(token?: string) {
                 const { payload } = await jwtVerify(cookieToken, secret);
 
                 // Extract the payload fields
-                const { email, userId, name } = payload as JwtPayload;
+                const { email, avatar, name } = payload as JwtPayload;
 
-                // console.log('Decoded user details from cookies:', { email, userId, name });
+                console.log('Decoded user details from cookies:', { email, avatar, name });
 
                 // Return the decoded payload
-                return { email, userId, name };
+                return { email, avatar, name };
             } catch (error) {
                 console.error('Invalid token:', error);
 
