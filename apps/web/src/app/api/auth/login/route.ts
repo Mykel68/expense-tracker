@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
         if (response.status === 200) {
             return returnResponse({
                 message: "Login successful",
-                response: null,
+                response: response.data,
                 statusCode: 200,
             });
         } else {

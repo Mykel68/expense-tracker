@@ -34,8 +34,10 @@ import {
 } from "@/components/ui/sidebar"
 
 import { data } from "@/constants/Sidebar"
+import { useAuthInit } from "@/hooks/use-user"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    useAuthInit()
     return (
         <Sidebar variant="inset" {...props} className="bg-gray-50 border-r border-gray-200">
             <SidebarHeader className=" border-gray-200">
@@ -54,10 +56,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
-            <SidebarContent className="p-4 space-y-6">
+            <SidebarContent className=" space-y-6">
                 <NavMain items={data.navMain} />
             </SidebarContent>
-            <SidebarFooter className="p-4 border-t border-gray-200">
+            <SidebarFooter className=" border-t border-gray-200">
                 <NavUser user={data.user} />
             </SidebarFooter>
         </Sidebar>

@@ -20,6 +20,8 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Eye, EyeOff } from "lucide-react"
 import { useState } from "react"
+import isSiggedIn from "@/actions/isSignIn"
+import { useAuthStore } from "@/store/auth"
 
 // Define schema for validation
 const loginSchema = z.object({
@@ -44,15 +46,19 @@ export function LoginForm({
         resolver: zodResolver(loginSchema),
     })
     const router = useRouter()
+    const { user, setUser } = useAuthStore()
 
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             const response = await sshInterceptor.post("/api/auth/login", data)
 
+            // console.log("response", response.data)
             if (!response.status === true) {
                 toast.error("Failed to login")
                 return
             }
+            isSiggedIn(response.data.response.data.token)
+            setUser(response.data.response.data.user)
 
             toast.success("Login successful!")
             router.push("/dashboard")

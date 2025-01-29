@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 
 export default function Page({ children }: { children: React.ReactNode }) {
+
     return (
         <SidebarProvider className="!bg-gray-100" >
             <AppSidebar />
