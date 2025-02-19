@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 import { returnErrorResponse, returnResponse } from '@/helpers/returnResponse';
+import { verifyToken } from '@/helpers/jwtSecretGenerator';
 
 export async function POST(req: NextRequest) {
+    const sshHeader = req.headers.get('ssh');
+    if (!sshHeader || !(await verifyToken({ ssh: sshHeader }))) {
+        return returnErrorResponse();
+    }
+
     try {
         const { email, password } = await req.json();
 

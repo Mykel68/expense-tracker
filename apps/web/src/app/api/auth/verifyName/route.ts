@@ -1,8 +1,14 @@
+import { verifyToken } from "@/helpers/jwtSecretGenerator";
 import { returnErrorResponse, returnResponse } from "@/helpers/returnResponse";
 import axios from "axios";
 import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
+    const sshHeader = request.headers.get('ssh');
+    if (!sshHeader || !(await verifyToken({ ssh: sshHeader }))) {
+        return returnErrorResponse();
+    }
+
     try {
         // Extract and validate the name from the request body
         const { name } = await request.json();

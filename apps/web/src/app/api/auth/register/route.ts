@@ -1,9 +1,15 @@
 import axios, { AxiosError } from "axios";
 import { returnErrorResponse, returnResponse } from "@/helpers/returnResponse";
 import { NextRequest } from "next/server";
+import { verifyToken } from "@/helpers/jwtSecretGenerator";
 
 
 export async function POST(request: NextRequest) {
+    const sshHeader = request.headers.get('ssh');
+    if (!sshHeader || !(await verifyToken({ ssh: sshHeader }))) {
+        return returnErrorResponse();
+    }
+
     const { email, password, name } = await request.json();
     try {
         // const pid = await getPidFromCookies(request);
