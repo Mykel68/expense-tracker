@@ -1,3 +1,4 @@
+"use client";
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -12,14 +13,14 @@ import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import AddressForm from './components/AddressForm';
+import AddressForm from './components/AdressForm';
 import Info from './components/Info';
 import InfoMobile from './components/InfoMobile';
 import PaymentForm from './components/PaymentForm';
 import Review from './components/Review';
-import SitemarkIcon from './components/SitemarkIcon';
-import AppTheme from '../shared-theme/AppTheme';
-import ColorModeIconDropdown from '../shared-theme/ColorModeIconDropdown';
+import SitemarkIcon from './components/SiteMarkIcon';
+import AppTheme from '@/shared-theme/AppTheme';
+import ColorModeIconDropdown from '@/shared-theme/ColorModeIconDropdown';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 function getStepContent(step: number) {
